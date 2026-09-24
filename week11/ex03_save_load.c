@@ -15,25 +15,11 @@ typedef struct
 // คืนค่า 1 ถ้าสำเร็จ, 0 ถ้าเปิดไฟล์ไม่ได้
 int saveGame(const char *path, const GameData *d)
 {
-    FILE *f = fopen(path, "wb");
-
+    FILE *f = fopen(path, "wb"); // "wb" = write binary
     if (!f)
-    {
         return 0;
-    }
-
-    fprintf(
-        f,
-        "POS:%.1f,%.1f\nHP:%d/%d\nLEVEL:%d\nSCORE:%d\n",
-        d->x,
-        d->y,
-        d->hp,
-        d->max_hp,
-        d->level,
-        d->score);
-
+    fwrite(d, sizeof(GameData), 1, f); // เขียน struct ทั้งก้อนลงไฟล์
     fclose(f);
-
     return 1;
 }
 
@@ -43,38 +29,15 @@ int saveGame(const char *path, const GameData *d)
 // คืนค่า -1 = ไฟล์เสีย
 int loadGame(const char *path, GameData *d)
 {
-    FILE *f = fopen(path, "r");
-
+    FILE *f = fopen(path, "rb"); // "rb" = read binary
     if (!f)
-    {
         return 0;
-    }
-
-    // ใช้ตัวแปรชั่วคราวเพื่อป้องกัน
-    // ข้อมูลเดิมเสียหายถ้าไฟล์ corrupted
     GameData tmp;
-
-    int n = fscanf(
-        f,
-        "POS:%f,%f\nHP:%d/%d\nLEVEL:%d\nSCORE:%d\n",
-        &tmp.x,
-        &tmp.y,
-        &tmp.hp,
-        &tmp.max_hp,
-        &tmp.level,
-        &tmp.score);
-
+    size_t n = fread(&tmp, sizeof(GameData), 1, f); // อ่านกลับมาทั้งก้อน
     fclose(f);
-
-    // อ่านข้อมูลไม่ครบ 6 ค่า
-    if (n != 6)
-    {
-        return -1;
-    }
-
-    // คัดลอกข้อมูลเมื่ออ่านสำเร็จเท่านั้น
+    if (n != 1)
+        return -1; // อ่านได้ไม่ครบ = ไฟล์เสีย
     *d = tmp;
-
     return 1;
 }
 
