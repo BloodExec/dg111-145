@@ -1,4 +1,4 @@
-{
+﻿{
     "terminal.integrated.profiles.windows": {
         "MSYS2 MinGW64": {
             "path": "powershell.exe",
@@ -18,6 +18,5 @@
     "code-runner.fileDirectoryAsCwd": true,
     "code-runner.runInTerminal": true,
     "editor.formatOnSave": true,
-    "C_Cpp.default.cStandard": "c99",
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.default.cStandard": "c99"
 }

@@ -1,5 +1,10 @@
+
 #ifndef GRID_H
 #define GRID_H
+
+#define EMPTY 0
+#define ICE_BLOCK 1
+#define OBSTACLE 2
 
 typedef struct
 {

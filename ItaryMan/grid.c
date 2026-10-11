@@ -1,3 +1,4 @@
+
 #include "grid.h"
 #include <stdio.h>
 
@@ -11,7 +12,7 @@ void Grid_Initialize(Grid *grid)
     {
         for (int col = 0; col < grid->numCols; col++)
         {
-            grid->grid[row][col] = 0;
+            grid->grid[row][col] = EMPTY;
         }
     }
 }
@@ -24,7 +25,6 @@ void Grid_Print(Grid *grid)
         {
             printf("%d ", grid->grid[row][col]);
         }
-
         printf("\n");
     }
 }
